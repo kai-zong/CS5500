@@ -5,7 +5,6 @@ import Headers from './components/Headers';
 export default function App() {
 
 const appName = "My App";
-
   return (
     <View style={styles.container}>
       <Headers appName={appName} />
