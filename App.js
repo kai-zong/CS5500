@@ -7,7 +7,9 @@ export default function App() {
 const appName = "My App";
   return (
     <View style={styles.container}>
-      <Headers appName={appName} />
+      <Headers appName={appName}>
+        <Text>something</Text>
+        </Headers>
       <StatusBar style="auto" />
     </View>
   );
