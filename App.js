@@ -13,7 +13,7 @@ const appName = "My App";
       <Headers appName={appName}>
         <Text>something</Text>
         </Headers>
-        <Input />
+        <Input/>
         
         <Text>{text}</Text>
       <StatusBar style="auto" />
