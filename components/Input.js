@@ -1,22 +1,42 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { useState } from 'react';
-import { TextInput } from 'react-native';
+import { View, Text, Button, Modal, StyleSheet } from "react-native";
+import React from "react";
+import { useState } from "react";
+import { TextInput } from "react-native";
 
-const Input = () => {
-
-  const[isFocused, setIsFocused] = useState(false)
+const Input = ({ InputHandler, isVisible }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [newText, setNewText] = useState("");
+  const handleConfirm = () => {
+    InputHandler(newText);
+  };
   return (
-    <View>
-    <TextInput 
-    style={{height:40}}
-    placeholder='Type here'
-    onFocus={()=>setIsFocused(true)}
-    onBlur={()=>setIsFocused(false)}
-    ></TextInput>
-    {!isFocused && <Text>Thank you</Text>}
-    </View>
-  )
-}
+    <Modal visible={isVisible}>
+      <View style={styles.container}>
+        <TextInput
+          style={{ height: 40 }}
+          placeholder="Type here"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChangeText={(text) => setNewText(text)}
+        ></TextInput>
+        {!isFocused && <Text>Thank you</Text>}
+        <View style={styles.button}><Button title="Submit" onPress={() => handleConfirm()} /></View>
+      </View>
+    </Modal>
+  );
+};
 
-export default Input
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    width: "30%",
+    margin: 100,
+  }
+});
+
+export default Input;
