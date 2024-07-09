@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Modal, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Modal, Button, SafeAreaView } from 'react-native';
 import Headers from './components/Headers';
 import { useState } from 'react';
 import Input from './components/Input';
@@ -16,16 +16,21 @@ function handleInputData(data) {
 const appName = "My App";
   return (
     <Modal animationType='slide'>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topContainer}>
       <Headers appName={appName}>
         <Text>something</Text>
         </Headers>
+        <Button onPress={()=>setModalVisibility(true)} title='Add a Goal'></Button>
+      </View>
+      <View style={styles.bottomContainer}>
         <Input InputHandler={handleInputData} isVisible={modalVisibility}/>
         
         <Text>{text}</Text>
-        <Button onPress={()=>setModalVisibility(true)} title='Add a Goal'></Button>
+        
       <StatusBar style="auto" />
-    </View>
+      </View>
+    </SafeAreaView>
     </Modal>
   );
 }
@@ -34,7 +39,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
+  topContainer: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "red",
+    justifyContent: "center"
+  },
+  bottomContainer: {
+    flex: 4,
+    alignItems: "center",
+    backgroundColor: "green"
+  }
 });

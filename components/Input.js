@@ -20,7 +20,7 @@ const Input = ({ InputHandler, isVisible }) => {
           onChangeText={(text) => setNewText(text)}
         ></TextInput>
         {!isFocused && <Text>Thank you</Text>}
-        <Button title="Submit" onPress={() => handleConfirm()} />
+        <View style={styles.button}><Button title="Submit" onPress={() => handleConfirm()} /></View>
       </View>
     </Modal>
   );
@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  button: {
+    width: "30%",
+    margin: 100,
+  }
 });
 
 export default Input;
