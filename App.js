@@ -23,7 +23,6 @@ const appName = "My App";
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
       <Headers appName={appName}>
-        <Text>something</Text>
         </Headers>
         <Button onPress={()=>setModalVisibility(true)} title='Add a Goal'></Button>
       </View>
