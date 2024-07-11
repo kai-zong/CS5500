@@ -12,6 +12,10 @@ function handleInputData(data) {
   console.log(data)
   setText(data)
   setModalVisibility(false)
+  
+}
+function handleCancel() {
+  setModalVisibility(false)
 }
 const appName = "My App";
   return (
@@ -19,12 +23,11 @@ const appName = "My App";
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
       <Headers appName={appName}>
-        <Text>something</Text>
         </Headers>
         <Button onPress={()=>setModalVisibility(true)} title='Add a Goal'></Button>
       </View>
       <View style={styles.bottomContainer}>
-        <Input InputHandler={handleInputData} isVisible={modalVisibility}/>
+        <Input InputHandler={handleInputData} isVisible={modalVisibility} cancelHandler={handleCancel}/>
         
         <Text>{text}</Text>
         
