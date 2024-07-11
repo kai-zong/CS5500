@@ -18,9 +18,9 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
     console.log(newText),
     <Modal visible={isVisible} transparent={true}>
       <View style={styles.container}>
-        <View>
+        <View style={styles.inputContainer}>
         <TextInput
-          style={{ height: 40, borderColor: "gray", borderWidth: 1}}
+          style={{ height: 40, borderColor: "purple", borderWidth: 2}}
           placeholder="Type here"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100
   },
+  inputContainer: {
+    justifyContent:"center",
+    alignItems: "center",
+    backgroundColor: "white",
+  }
 });
 
 export default Input;
