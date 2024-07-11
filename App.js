@@ -28,9 +28,9 @@ const appName = "My App";
       </View>
       <View style={styles.bottomContainer}>
         <Input InputHandler={handleInputData} isVisible={modalVisibility} cancelHandler={handleCancel}/>
-        
-        <Text>{text}</Text>
-        
+        <View style={styles.textContainer}>
+        <Text style={styles.textStyle}>{text}</Text>
+        </View>
       <StatusBar style="auto" />
       </View>
     </SafeAreaView>
@@ -54,5 +54,15 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: "center",
     backgroundColor: "green"
+  },
+  textStyle:{
+    fontSize: 20,
+    padding: 10,
+    borderRadius: 10,
+  },
+  textContainer:{
+    color: "darkblue",
+    marginVertical:10,
+    backgroundColor: "lightblue"
   }
 });
