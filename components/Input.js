@@ -16,10 +16,11 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
   };
   return (
     console.log(newText),
-    <Modal visible={isVisible}>
+    <Modal visible={isVisible} transparent={true}>
       <View style={styles.container}>
+        <View style={styles.inputContainer}>
         <TextInput
-          style={{ height: 40 }}
+          style={{ height: 40, borderColor: "purple", borderWidth: 2}}
           placeholder="Type here"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -29,8 +30,9 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
         <Image source={{"uri":'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
         <Image source={require('../res/set_a_target.png')} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
         <View style={{flexDirection: "row"}}>
-        <View style={styles.button}><Button title="Confirm" onPress={() => handleConfirm()} disabled={true} /></View>
+        <View style={styles.button}><Button title="Confirm" onPress={() => handleConfirm()} /></View>
         <View style={styles.button}><Button title="Cancel" onPress={() => handleCancel()} /></View>
+        </View>
         </View>
       </View>
     </Modal>
@@ -40,7 +42,6 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 100
+  },
+  inputContainer: {
+    justifyContent:"center",
+    alignItems: "center",
+    backgroundColor: "white",
   }
 });
 
