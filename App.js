@@ -43,11 +43,12 @@ export default function App() {
             isVisible={modalVisibility}
             cancelHandler={handleCancel}
           />
-          <View style={styles.textContainer}>
-            {goals.map((goal) => (
+          
+            {goals.length ? <Text>Please Add a Goal</Text>: goals.map((goal) => (
+              <View style={styles.textContainer}>
               <Text key={goal.id} style={styles.textStyle}>{goal.text}</Text>
-            ))}
-          </View>
+              </View>))}
+          
           <StatusBar style="auto" />
         </View>
       </SafeAreaView>
