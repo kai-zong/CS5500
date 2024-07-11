@@ -7,10 +7,13 @@ import {
   Modal,
   Button,
   SafeAreaView,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import Headers from "./components/Headers";
 import { useState } from "react";
 import Input from "./components/Input";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   // const [text, setText] = useState("");
@@ -26,6 +29,12 @@ export default function App() {
   function handleCancel() {
     setModalVisibility(false);
   }
+
+  const handleDelete = (goalId) => {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== goalId);
+    });
+  };
   const appName = "My App";
   return (
     <Modal animationType="slide">
@@ -43,12 +52,26 @@ export default function App() {
             isVisible={modalVisibility}
             cancelHandler={handleCancel}
           />
-          
-            {goals.length ? <Text>Please Add a Goal</Text>: goals.map((goal) => (
-              <View style={styles.textContainer}>
-              <Text key={goal.id} style={styles.textStyle}>{goal.text}</Text>
-              </View>))}
-          
+
+          {goals.length === 0 ? (
+            <Text>Please Add a Goal</Text>
+          ) : (
+            <ScrollView>
+             
+              {goals.map((goal) => { return  <View style={styles.textContainer} key={goal.id}>
+                  <Text style={styles.textStyle}>{goal.text}</Text>
+                </View>;
+              })}
+            </ScrollView>
+          )}
+
+          {/* <FlatList
+  renderItem={({ item }) => (
+    <GoalItem goal={item} deleteHandler={handleDelete} />
+  )}
+  data={goals}
+/> */}
+
           <StatusBar style="auto" />
         </View>
       </SafeAreaView>
