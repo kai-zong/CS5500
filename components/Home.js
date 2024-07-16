@@ -15,7 +15,7 @@ import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 
-export default function Home() {
+export default function Home({ navigation }) {
   // const [text, setText] = useState("");
   const [modalVisibility, setModalVisibility] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -30,6 +30,9 @@ export default function Home() {
     setModalVisibility(false);
   }
 
+  const handlePressGo =() => { 
+    console.log("Go pressed")
+    navigation.navigate('Details')}
   const handleDelete = (goalId) => {
     setGoals((currentGoals) => {
       return currentGoals.filter((goal) => goal.id !== goalId);
@@ -53,7 +56,7 @@ export default function Home() {
             cancelHandler={handleCancel}
           />
 
-          {goals.length === 0 ? (
+          {/* {goals.length === 0 ? (
             <Text>Please Add a Goal</Text>
           ) : (
             <ScrollView>
@@ -63,14 +66,14 @@ export default function Home() {
                 </View>;
               })}
             </ScrollView>
-          )}
+          )} */}
 
-          {/* <FlatList
+          <FlatList
   renderItem={({ item }) => (
-    <GoalItem goal={item} deleteHandler={handleDelete} />
+    <GoalItem goal={item} deleteHandler={handleDelete} pressHandler={handlePressGo}/>
   )}
   data={goals}
-/> */}
+/>
 
           <StatusBar style="auto" />
         </View>
