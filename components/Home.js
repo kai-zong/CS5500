@@ -33,6 +33,7 @@ export default function Home({ navigation }) {
   const handlePressGo =() => { 
     console.log("Go pressed")
     navigation.navigate('Details')}
+    
   const handleDelete = (goalId) => {
     setGoals((currentGoals) => {
       return currentGoals.filter((goal) => goal.id !== goalId);
