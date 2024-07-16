@@ -41,7 +41,6 @@ export default function Home({ navigation }) {
   };
   const appName = "My App";
   return (
-    <Modal animationType="slide">
       <SafeAreaView style={styles.container}>
         <View style={styles.topContainer}>
           <Headers appName={appName}></Headers>
@@ -76,10 +75,11 @@ export default function Home({ navigation }) {
   data={goals}
 />
 
-          <StatusBar style="auto" />
+          
         </View>
+        <StatusBar style="auto" />
       </SafeAreaView>
-    </Modal>
+      
   );
 }
 
