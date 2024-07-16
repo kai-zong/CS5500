@@ -30,10 +30,10 @@ export default function Home({ navigation }) {
     setModalVisibility(false);
   }
 
-  const handlePressGo =() => { 
-    console.log("Go pressed")
-    navigation.navigate('Details')}
-    
+  const handlePressGo =(pressedGoal) => { 
+    console.log("Go pressed", pressedGoal)
+    navigation.navigate('Details', {goal: pressedGoal})}
+
   const handleDelete = (goalId) => {
     setGoals((currentGoals) => {
       return currentGoals.filter((goal) => goal.id !== goalId);
