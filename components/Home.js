@@ -82,19 +82,19 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     justifyContent: "center",
   },
   topContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "red",
+    backgroundColor: "white",
     justifyContent: "center",
   },
   bottomContainer: {
     flex: 4,
     alignItems: "center",
-    backgroundColor: "green",
+    backgroundColor: "white",
     rowGap: 20,
   },
   textStyle: {
