@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 
-const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
+const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
     <View style={styles.textContainer}>
       <Text style={styles.textStyle}>{goal.text}</Text>
@@ -14,7 +14,7 @@ const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
       <Button
         title="i"
         onPress={() => {
-          pressHandler(goal);
+          navigation.navigate('Details', {goal: goal})
         }}
       />
     </View>
