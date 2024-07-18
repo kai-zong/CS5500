@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import PressableButton from "./PressableButton";
 
 const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
@@ -14,13 +15,19 @@ const GoalItem = ({ goal, deleteHandler, navigation }) => {
       }}>
 
       <Text style={styles.textStyle}>{goal.text}</Text>
-      <Button
+      {/* <Button
         title="X"
         onPress={() => {
           deleteHandler(goal.id);
         }}
-      />
+      /> */}
 
+      <PressableButton pressedFunction={() => {
+          deleteHandler(goal.id);
+        }}
+        componentStyle={styles.buttonStyle}>
+        <Text>X</Text>
+      </PressableButton>
       </Pressable>
     </View>
   );
@@ -41,9 +48,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 10,
   },
-  pressedStyle: {
-    opacity: 0.5,
-    backgroundColor: "pink",
+  buttonStyle: {
+    marginLeft: 10,
+    padding: 5,
+    backgroundColor: "grey",
   },
   textContainer: {
     color: "darkblue",
