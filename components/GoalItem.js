@@ -1,9 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 
 const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
     <View style={styles.textContainer}>
+      <Pressable
+      style={styles.pressable}
+      onPress={() => {
+        navigation.navigate('Details', {goal: goal})
+      }}>
       <Text style={styles.textStyle}>{goal.text}</Text>
       <Button
         title="X"
@@ -11,12 +16,8 @@ const GoalItem = ({ goal, deleteHandler, navigation }) => {
           deleteHandler(goal.id);
         }}
       />
-      <Button
-        title="i"
-        onPress={() => {
-          navigation.navigate('Details', {goal: goal})
-        }}
-      />
+
+      </Pressable>
     </View>
   );
 };
@@ -26,14 +27,17 @@ export default GoalItem;
 const styles = StyleSheet.create({
   textStyle: {
     margin: 30,
-    fontSize: 70,
+    fontSize: 20,
     padding: 10,
     borderRadius: 10,
   },
-  textContainer: {
+  pressable:{
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    padding: 10,
+  },
+  textContainer: {
     color: "darkblue",
     marginVertical: 10,
     backgroundColor: "lightblue",

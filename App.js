@@ -22,7 +22,7 @@ export default function App() {
         />
         <Stack.Screen name="Details" component={GoalDetails}
         options={({navigation, route})=>{
-          return {title: route.params.goal.text || "Goal Details"
+          return {title: route.params? route.params.goal.text: "Goal Details"
           }
         }} />
       </Stack.Navigator>
