@@ -5,8 +5,10 @@ const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
     <View style={styles.textContainer}>
       <Pressable
-      android_ripple={{color: "pink"}}
-      style={styles.pressable}
+      // android_ripple={{color: "pink"}}
+      style={({pressed})=>
+        [styles.horizontalContainer, pressed && styles.pressedStyle
+        ]}
       onPress={() => {
         navigation.navigate('Details', {goal: goal})
       }}>
@@ -33,11 +35,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  pressable:{
+  horizontalContainer:{
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 10,
+  },
+  pressedStyle: {
+    opacity: 0.5,
+    backgroundColor: "pink",
   },
   textContainer: {
     color: "darkblue",
