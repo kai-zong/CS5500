@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 import PressableButton from "./PressableButton";
+import { EvilIcons } from '@expo/vector-icons';
 
 const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
@@ -26,7 +27,7 @@ const GoalItem = ({ goal, deleteHandler, navigation }) => {
           deleteHandler(goal.id);
         }}
         componentStyle={styles.buttonStyle}>
-        <Text>X</Text>
+        <EvilIcons name="trash" size={35} color="black" />
       </PressableButton>
       </Pressable>
     </View>
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginLeft: 10,
     padding: 5,
-    backgroundColor: "grey",
+    borderRadius: 10,
+    backgroundColor: "pink",
   },
   textContainer: {
     color: "darkblue",
