@@ -14,6 +14,7 @@ import Headers from "./Headers";
 import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 
 export default function Home({ navigation }) {
   // const [text, setText] = useState("");
@@ -44,10 +45,12 @@ export default function Home({ navigation }) {
       <SafeAreaView style={styles.container}>
         <View style={styles.topContainer}>
           <Headers appName={appName}></Headers>
-          <Button
-            onPress={() => setModalVisibility(true)}
-            title="Add a Goal"
-          ></Button>
+          <PressableButton
+            pressedFunction={() => setModalVisibility(true)}
+            componentStyle={{backgroundColor: "lightblue", padding: 10, borderRadius: 10}}
+          >
+            <Text style={styles.textStyle}>Add a Goal</Text>
+          </PressableButton>
         </View>
         <View style={styles.bottomContainer}>
           <Input
