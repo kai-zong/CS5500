@@ -70,7 +70,7 @@ export default function Home({ navigation }) {
 
           <FlatList
   renderItem={({ item }) => (
-    <GoalItem goal={item} deleteHandler={handleDelete} pressHandler={handlePressGo}/>
+    <GoalItem goal={item} deleteHandler={handleDelete} navigation={navigation}/>
   )}
   data={goals}
 />
