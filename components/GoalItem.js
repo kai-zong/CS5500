@@ -5,10 +5,12 @@ const GoalItem = ({ goal, deleteHandler, navigation }) => {
   return (
     <View style={styles.textContainer}>
       <Pressable
+      android_ripple={{color: "pink"}}
       style={styles.pressable}
       onPress={() => {
         navigation.navigate('Details', {goal: goal})
       }}>
+
       <Text style={styles.textStyle}>{goal.text}</Text>
       <Button
         title="X"
