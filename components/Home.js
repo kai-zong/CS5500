@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { writeToDB } from "../firebaseSetup/firebaseHelper";
+import { writeToDB, deleteFromDB } from "../firebaseSetup/firebaseHelper";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../firebaseSetup/firebaseSetup";
 
@@ -25,16 +25,21 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    onSnapshot(collection(db, "goals"), (snapshot) => {
-      if (snapshot.empty) {
+    const unsubscribe = onSnapshot(collection(db, "goals"), (snapshot) => {
+      let data = [];
+      if (!snapshot.empty) {
+        snapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+          console.log(doc.id, "=>", doc.data());
+        });
       }
-      const data = [];
-      snapshot.forEach((doc) => {
-        data.push({...doc.data(), id: doc.id});
-        console.log(doc.id, "=>", doc.data());
-      });
       setGoals(data);
-    })}, []);
+    });
+
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
   function handleInputData(data) {
     const newGoal = { text: data };
     writeToDB(newGoal, "goals");
@@ -49,9 +54,7 @@ export default function Home({ navigation }) {
     navigation.navigate('Details', {goal: pressedGoal})}
 
   const handleDelete = (goalId) => {
-    setGoals((currentGoals) => {
-      return currentGoals.filter((goal) => goal.id !== goalId);
-    });
+    deleteFromDB(goalId, "goals");
   };
   const appName = "My App";
   return (
