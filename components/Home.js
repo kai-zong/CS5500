@@ -11,20 +11,33 @@ import {
   FlatList,
 } from "react-native";
 import Headers from "./Headers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { writeToDB } from "../firebaseSetup/firebaseHelper";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "../firebaseSetup/firebaseSetup";
+
 
 export default function Home({ navigation }) {
-  // const [text, setText] = useState("");
   const [modalVisibility, setModalVisibility] = useState(false);
   const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(db, "goals"), (snapshot) => {
+      if (snapshot.empty) {
+      }
+      const data = [];
+      snapshot.forEach((doc) => {
+        data.push({...doc.data(), id: doc.id});
+        console.log(doc.id, "=>", doc.data());
+      });
+      setGoals(data);
+    })}, []);
   function handleInputData(data) {
-    const newGoal = { text: data, id: Math.random() };
-    setGoals((currentGoals) => {
-      return [...currentGoals, newGoal];
-    });
+    const newGoal = { text: data };
+    writeToDB(newGoal, "goals");
     setModalVisibility(false);
   }
   function handleCancel() {
