@@ -1,5 +1,6 @@
 import { View, Text, Button } from "react-native";
 import React from "react";
+import { setDocInDB } from "../firebaseSetup/firebaseHelper";
 
 export default function GoalDetails({ navigation, route }) {
   const { goal } = route.params;
@@ -11,6 +12,7 @@ export default function GoalDetails({ navigation, route }) {
         <Button
           title="warning"
           onPress={() => {
+            setDocInDB({ warning: true }, goal.id, "goals");
             setTextColor( "red");
             navigation.setOptions({title: "Warning"})
           }}
