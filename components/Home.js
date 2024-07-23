@@ -11,20 +11,38 @@ import {
   FlatList,
 } from "react-native";
 import Headers from "./Headers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { writeToDB, deleteFromDB } from "../firebaseSetup/firebaseHelper";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "../firebaseSetup/firebaseSetup";
+
 
 export default function Home({ navigation }) {
-  // const [text, setText] = useState("");
   const [modalVisibility, setModalVisibility] = useState(false);
   const [goals, setGoals] = useState([]);
-  function handleInputData(data) {
-    const newGoal = { text: data, id: Math.random() };
-    setGoals((currentGoals) => {
-      return [...currentGoals, newGoal];
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "goals"), (snapshot) => {
+      let data = [];
+      if (!snapshot.empty) {
+        snapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+          console.log(doc.id, "=>", doc.data());
+        });
+      }
+      setGoals(data);
     });
+
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  function handleInputData(data) {
+    const newGoal = { text: data };
+    writeToDB(newGoal, "goals");
     setModalVisibility(false);
   }
   function handleCancel() {
@@ -36,9 +54,7 @@ export default function Home({ navigation }) {
     navigation.navigate('Details', {goal: pressedGoal})}
 
   const handleDelete = (goalId) => {
-    setGoals((currentGoals) => {
-      return currentGoals.filter((goal) => goal.id !== goalId);
-    });
+    deleteFromDB(goalId, "goals");
   };
   const appName = "My App";
   return (
