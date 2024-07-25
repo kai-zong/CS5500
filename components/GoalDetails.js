@@ -1,6 +1,7 @@
 import { View, Text, Button } from "react-native";
 import React from "react";
 import { setDocInDB } from "../firebaseSetup/firebaseHelper";
+import GoalUsers from "./GoalUsers";
 
 export default function GoalDetails({ navigation, route }) {
   const { goal } = route.params;
@@ -35,6 +36,7 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details", { goal });
         }}
       />
+      <GoalUsers />
     </View>
   );
 }
