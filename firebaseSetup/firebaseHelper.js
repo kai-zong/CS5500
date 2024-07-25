@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
@@ -23,5 +23,19 @@ export async function setDocInDB(data, docId, collectionName) {
     await setDoc(doc(db, collectionName, docId), data, { merge: true });
   } catch (e) {
     console.error("Error setting document: ", e);
+  }
+}
+
+export async function readAllDocs (collectionName){
+  try{
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ ...doc.data(), id: doc.id });
+        });
+    return data;
+  }
+  catch(e){
+    console.error("Error reading documents: ", e);
   }
 }
