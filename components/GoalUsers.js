@@ -1,7 +1,8 @@
 import { View, Text, FlatList } from "react-native";
 import React, { useEffect, useState} from "react";
+import { writeToDB } from "../firebaseSetup/firebaseHelper";
 
-export default function GoalUsers() {
+export default function GoalUsers({id}) {
     const [users, setUsers] = useState([]);
   useEffect(() => {
     async function fetchUserData() {
@@ -11,6 +12,10 @@ export default function GoalUsers() {
         throw new Error("Error fetching data");
       }
         const data = await dataResponse.json();
+
+        data.forEach(userData => {
+            writeToDB(userData, `goals/${id}/users`)
+        });
         console.log(data);
         setUsers(data);
         }

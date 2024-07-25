@@ -36,7 +36,7 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details", { goal });
         }}
       />
-      <GoalUsers />
+      <GoalUsers id={goal.id}/>
     </View>
   );
 }
