@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { useState } from 'react';
 import { auth } from '../firebaseSetup/firebaseSetup';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = ({navigation}) => {
 
@@ -28,7 +29,7 @@ const SignIn = ({navigation}) => {
             value = {password}
             onChangeText={(changedText) => setPassword(changedText)}
             />
-            <Button title="Log In" onPress={passToFirebase()}/>
+            <Button title="Log In" onPress={() => passToFirebase()}/>
             <Button title="New User? Sign Up"  onPress={() => navigation.replace("SignUp")}/>
         </View>
     );
