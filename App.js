@@ -4,13 +4,15 @@ import Home from "./components/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GoalDetails from "./components/GoalDetails";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home"
+      <Stack.Navigator initialRouteName="SignIn"
       screenOptions={{headerStyle: { backgroundColor: "black" },
       headerTintColor: "white"}}>
         <Stack.Screen
@@ -25,6 +27,9 @@ export default function App() {
           return {title: route.params? route.params.goal.text: "Goal Details"
           }
         }} />
+        <Stack.Screen name="SignUp" component={SignIn} />
+        <Stack.Screen name="SignIn" component={SignUp} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
