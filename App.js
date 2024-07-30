@@ -27,8 +27,8 @@ export default function App() {
           return {title: route.params? route.params.goal.text: "Goal Details"
           }
         }} />
-        <Stack.Screen name="SignUp" component={SignIn} />
-        <Stack.Screen name="SignIn" component={SignUp} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
 
       </Stack.Navigator>
     </NavigationContainer>
