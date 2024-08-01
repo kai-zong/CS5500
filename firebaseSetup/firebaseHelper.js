@@ -30,7 +30,7 @@ export async function setDocInDB(data, docId, collectionName) {
 
 export async function readAllDocs (collectionName){
   try{
-    const querySnapshot = await getDocs(query(collection(db, collectionName), where("owner", "==", auth.currentUser.uid)));
+    const querySnapshot = await getDocs(collection(db, collectionName));
     let data = [];
     querySnapshot.forEach((doc) => {
       data.push({ ...doc.data(), id: doc.id });
