@@ -11,6 +11,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+  [
+    "expo-image-picker",
+    {
+      "cameraPermission": "The app needs access to your camera.",
+      "photoPermission": "The app needs access to your gallery."
+    }
+  ]
+],
     "ios": {
       "supportsTablet": true
     },

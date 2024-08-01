@@ -18,6 +18,8 @@ import PressableButton from "./PressableButton";
 import { writeToDB, deleteFromDB } from "../firebaseSetup/firebaseHelper";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../firebaseSetup/firebaseSetup";
+import {auth} from '../firebaseSetup/firebaseSetup';
+import {query, where} from 'firebase/firestore';
 
 
 export default function Home({ navigation }) {
@@ -25,7 +27,7 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "goals"), (snapshot) => {
+    const unsubscribe = onSnapshot(query(collection(db, "goals"), where("owner", "==", auth.currentUser.uid)), (snapshot) => {
       let data = [];
       if (!snapshot.empty) {
         snapshot.forEach((doc) => {
@@ -34,6 +36,8 @@ export default function Home({ navigation }) {
         });
       }
       setGoals(data);
+    }, (error) => {
+      console.log("Error reading documents: ", error);
     });
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
@@ -41,7 +45,7 @@ export default function Home({ navigation }) {
   }, []);
 
   function handleInputData(data) {
-    const newGoal = { text: data };
+    const newGoal = { text: data.NewText, owner: auth.currentUser.uid };
     writeToDB(newGoal, "goals");
     setModalVisibility(false);
   }
