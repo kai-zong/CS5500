@@ -2,6 +2,7 @@ import { View, Text, Button, Modal, StyleSheet, Image} from "react-native";
 import React from "react";
 import { useState } from "react";
 import { TextInput } from "react-native";
+import ImageManager from "./ImageManager";
 
 const Input = ({ InputHandler, isVisible, cancelHandler}) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -29,6 +30,7 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
         {!isFocused && <Text>Thank you</Text>}
         <Image source={{"uri":'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
         <Image source={require('../res/set_a_target.png')} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
+        <ImageManager/>
         <View style={{flexDirection: "row"}}>
         <View style={styles.button}><Button title="Confirm" onPress={() => handleConfirm()} /></View>
         <View style={styles.button}><Button title="Cancel" onPress={() => handleCancel()} /></View>
