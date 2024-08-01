@@ -7,14 +7,20 @@ import ImageManager from "./ImageManager";
 const Input = ({ InputHandler, isVisible, cancelHandler}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [newText, setNewText] = useState("");
+  const [imageUri, setImageUri] = useState("");
   const handleConfirm = () => {
-    InputHandler(newText);
+    InputHandler({newText, imageUri});
     setNewText("");
   };
   const handleCancel = () => {
     cancelHandler();
     setNewText("");
   };
+
+  const imageUriHandler = (uri) => {
+    // console.log(uri);
+    setImageUri(uri);
+  }
   return (
     console.log(newText),
     <Modal visible={isVisible} transparent={true}>
@@ -30,7 +36,7 @@ const Input = ({ InputHandler, isVisible, cancelHandler}) => {
         {!isFocused && <Text>Thank you</Text>}
         <Image source={{"uri":'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
         <Image source={require('../res/set_a_target.png')} style={styles.image} alt="A cartoon image of an archery board with an arrow shot in the midpoint"></Image>
-        <ImageManager/>
+        <ImageManager imageUriHandler={imageUriHandler}/>
         <View style={{flexDirection: "row"}}>
         <View style={styles.button}><Button title="Confirm" onPress={() => handleConfirm()} /></View>
         <View style={styles.button}><Button title="Cancel" onPress={() => handleCancel()} /></View>

@@ -45,7 +45,7 @@ export default function Home({ navigation }) {
   }, []);
 
   function handleInputData(data) {
-    const newGoal = { text: data, owner: auth.currentUser.uid };
+    const newGoal = { text: data.NewText, owner: auth.currentUser.uid };
     writeToDB(newGoal, "goals");
     setModalVisibility(false);
   }

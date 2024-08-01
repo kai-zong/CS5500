@@ -3,7 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { View, Image, Button } from "react-native";
 
-const ImageManager = () => { 
+const ImageManager = ({imageUriHandler}) => { 
 
     const [response, requestPermission] = ImagePicker.useCameraPermissions();
     const [result, setResult] = useState("");
@@ -21,8 +21,13 @@ const ImageManager = () => {
                 Alert.alert("permission not granted")
                 return 
             }
-            const taken = await launchCameraAsync();
+            const taken = await launchCameraAsync(
+                {allowEditing: true,    }
+            );
             setResult(taken.assets[0].uri);
+            console.log("taken",taken)
+            console.log("resukt",result)
+            imageUriHandler(taken.assets[0].uri)
         }
         catch(e){
             console.error(e);
@@ -35,7 +40,7 @@ const ImageManager = () => {
             <Button title="Take a picture" onPress={() => {
                 handleImagePicker();
             }}/>
-            {result && (<Image sourece= {{uri: result}}/>)}
+            {result && (<Image source= {{uri: result}} style={{width:100, height:100}}/>)}
         </View>
     );
 };
