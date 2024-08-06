@@ -1,11 +1,15 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Image } from "react-native";
 import React from "react";
 import { setDocInDB } from "../firebaseSetup/firebaseHelper";
+import { getDownloadURL, ref } from "firebase/storage";
 import GoalUsers from "./GoalUsers";
+import { useEffect } from "react";
+import { storage } from "../firebaseSetup/firebaseSetup";
 
 export default function GoalDetails({ navigation, route }) {
   const { goal } = route.params;
   const [textColor, setTextColor] = React.useState("black");
+  const [imageUrl, setImageUrl] = React.useState("");
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -19,6 +23,24 @@ export default function GoalDetails({ navigation, route }) {
           }}
         />),
   })}, [navigation])
+
+  useEffect (() => {
+    async function getImageUrl(){
+      try{
+        if (route.params){
+          const url = await getDownloadURL(ref(storage, route.params.goal.imageUri));
+          console.log(url)
+        setImageUrl(url);
+        }
+        
+      }
+      catch(e){
+        console.log(e);
+      }
+      
+    }
+    getImageUrl();
+  })
   return (
     <View>
       {!goal ? (
@@ -30,6 +52,7 @@ export default function GoalDetails({ navigation, route }) {
           You are seeing the details of the goal with text: {goal.text} and id: {goal.id}
         </Text>
       )}
+      {imageUrl && <Image source={{uri: imageUrl}} style={{width: 100, height: 100}}/>}
       <Button
         title="More"
         onPress={() => {
