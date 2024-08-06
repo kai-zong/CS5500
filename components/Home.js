@@ -20,6 +20,8 @@ import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../firebaseSetup/firebaseSetup";
 import {auth} from '../firebaseSetup/firebaseSetup';
 import {query, where} from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {storage} from '../firebaseSetup/firebaseSetup';
 
 
 export default function Home({ navigation }) {
@@ -44,8 +46,34 @@ export default function Home({ navigation }) {
     return () => {unsubscribe()};
   }, []);
 
-  function handleInputData(data) {
-    const newGoal = { text: data.NewText, owner: auth.currentUser.uid };
+  async function retrieveUpLoadImage(uri){
+    const response = await fetch(uri);
+    try{
+      if(!response.ok){
+        throw new Error("HTTP error, status = " + response.status)}
+        const blob = await response.blob();
+        const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+const imageRef =  ref(storage, `images/${imageName}`)
+const uploadResult = await uploadBytesResumable(imageRef, blob);
+        console.log("Full path", uploadResult.metadata.fullPath);
+        return uploadResult.metadata.fullPath;
+      }
+    catch(e){
+      console.log(e);
+    }
+
+  }
+
+  async function handleInputData(data) {
+    console.log(data)
+    let uri = "";
+    if(data.imageUri){
+
+      uri = await retrieveUpLoadImage(data.imageUri);
+    } 
+    console.log(uri)
+    const newGoal = { text: data.newText, owner: auth.currentUser.uid, imageUri: uri};
+
     writeToDB(newGoal, "goals");
     setModalVisibility(false);
   }
