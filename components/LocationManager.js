@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, Button, Image} from 'react-native';
 import * as Location from 'expo-location';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {mapsApiKey} from "@env"
+import { useRoute } from '@react-navigation/native';
+import { writeWithIdToDB, getDocWithIdFromDB } from '../firebaseSetup/firebaseHelper';
+import { auth } from '../firebaseSetup/firebaseSetup';
 
 
-
-const LocationManager = () => {
+const LocationManager = ({navigation}) => {
       const [response, requestPermission] = Location.useForegroundPermissions();
       const [location, setLocation] = useState();
       async function VerifyPermissions(){
@@ -16,6 +18,7 @@ const LocationManager = () => {
             const permissionResponse = await requestPermission();
             return permissionResponse.granted;
       }
+      const route = useRoute();
       const locateUserHandler = async () => {
         try {
             const permission = await VerifyPermissions();
@@ -33,13 +36,43 @@ const LocationManager = () => {
             console.error(err);
         }
       };
+
+      function chooseLocationHandler(){
+       navigation.navigate("Map");
+      }
+
+      
+
+      useEffect(() => {
+        if(route.params){
+            setLocation(route.params.location);
+        }
+      })
+
+      useEffect(() => {
+        async function getLocation(){
+            try{
+                const location = await getDocWithIdFromDB('users', auth.currentUser.uid);
+                if(location){
+                    setLocation(location);
+                }
+            }
+            catch(e){
+                console.error(e);
+            }
+        }
+        getLocation();
+      })
     return (
         <View>
             <Text>Location Manager</Text>
             <Button title="Get Location" onPress={() => {locateUserHandler()}}/>
+              <Button title="Let me choose my location" onPress={chooseLocationHandler}/>
             {location && 
             <Image style={{height: 200, width: 200}} source={{uri:`https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`}}/>}
-
+            <Button title="Save Location" onPress={() => {
+                writeWithIdToDB(location, 'users', auth.currentUser.uid);
+            }} />
         </View>
     );
 };
