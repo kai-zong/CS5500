@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import {auth} from './firebaseSetup/firebaseSetup';
 import Profile from "./components/Profile";
+import Map from "./components/Map";
 
 const Stack = createNativeStackNavigator();
 const AuthStack = <>
@@ -39,6 +40,7 @@ const AppStack = <>
             return <Button title="Sign Out" onPress={()=>{signOut(auth)}}/>
           }}
         }/>
+        <Stack.Screen name="Map" component={Map}/>
 </>
 
 export default function App() {
