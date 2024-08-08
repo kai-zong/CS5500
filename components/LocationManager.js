@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Button, Image} from 'react-native';
 import * as Location from 'expo-location';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {mapsApiKey} from "@env"
+import { useRoute } from '@react-navigation/native';
 
 
 
@@ -16,6 +17,7 @@ const LocationManager = ({navigation}) => {
             const permissionResponse = await requestPermission();
             return permissionResponse.granted;
       }
+      const route = useRoute();
       const locateUserHandler = async () => {
         try {
             const permission = await VerifyPermissions();
@@ -37,6 +39,12 @@ const LocationManager = ({navigation}) => {
       function chooseLocationHandler(){
        navigation.navigate("Map");
       }
+
+      useEffect(() => {
+        if(route.params){
+            setLocation(route.params.location);
+        }
+      },[route])
     return (
         <View>
             <Text>Location Manager</Text>
