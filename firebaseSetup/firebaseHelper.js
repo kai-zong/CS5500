@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, setDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "./firebaseSetup";
 import { query, where } from "firebase/firestore";
 import { auth } from "./firebaseSetup";
@@ -39,5 +39,27 @@ export async function readAllDocs (collectionName){
   }
   catch(e){
     console.error("Error reading documents: ", e);
+  }
+}
+
+export async function writeWithIdToDB(data, collectionName, id){
+  try {
+    await setDoc(doc(db, collectionName, id), data, { merge: true });
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+export async function getDocWithIdFromDB(collectionName, id){
+  try{
+    const docSnap = await getDoc(doc(db, collectionName, id));
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such document!");
+    }
+  }
+  catch(e){
+    console.error("Error getting document: ", e);
   }
 }
