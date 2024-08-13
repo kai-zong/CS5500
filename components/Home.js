@@ -34,9 +34,9 @@ export default function Home({ navigation }) {
   useEffect(() => {
     async function getToken(){
       const havePermission = await VerifyPermissions();
-      if(havePermission !== "granted"){
-        return;
-      }
+      // if(havePermission !== "granted"){
+      //   return;
+      // }
       try{
         if (Platform.OS === 'android'){
           await Notifications.setNotificationChannelAsync('default', {
@@ -48,7 +48,8 @@ export default function Home({ navigation }) {
   )}
 
   
-  Notifications.getExpoPushTokenAsync({projectId: Constants.expoConfig.extra.eas.projectId}) }
+  await Notifications.getExpoPushTokenAsync({projectId: Constants.expoConfig.extra.eas.projectId})
+console.log("sss") }
   catch(e){ console.log(e)}
 }
 
