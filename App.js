@@ -10,6 +10,7 @@ import SignIn from "./components/SignIn";
 import {auth} from './firebaseSetup/firebaseSetup';
 import Profile from "./components/Profile";
 import Map from "./components/Map";
+import * as Notifications from 'expo-notifications';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = <>
@@ -43,6 +44,16 @@ const AppStack = <>
         <Stack.Screen name="Map" component={Map}/>
 </>
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: true,
+    };
+  },
+});
+
 export default function App() {
 
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -53,6 +64,26 @@ export default function App() {
       } else {
         setIsUserAuthenticated(false);
       }})}, []);
+
+  useEffect(() =>{
+    const subscription = Notifications.addNotificationReceivedListener(
+      notification => {
+        console.log(notification);
+      }
+    )
+    return () => subscription.remove();
+  }, [])
+
+  useEffect(() =>{
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      response => {
+        console.log(response);
+      }
+    )
+    return () => subscription.remove();
+  }
+, [])
+
   return (
 
     <NavigationContainer>
