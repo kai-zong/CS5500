@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   ScrollView,
   FlatList,
+  Platform,
 } from "react-native";
 import Headers from "./Headers";
 import { useState, useEffect } from "react";
@@ -22,11 +23,37 @@ import {auth} from '../firebaseSetup/firebaseSetup';
 import {query, where} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import {storage} from '../firebaseSetup/firebaseSetup';
-
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import { VerifyPermissions } from "./NotificationManager";
 
 export default function Home({ navigation }) {
   const [modalVisibility, setModalVisibility] = useState(false);
   const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    async function getToken(){
+      const havePermission = await VerifyPermissions();
+      if(havePermission !== "granted"){
+        return;
+      }
+      try{
+        if (Platform.OS === 'android'){
+          await Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+          }
+
+         
+  )}
+
+  
+  Notifications.getExpoPushTokenAsync({projectId: Constants.expoConfig.extra.eas.projectId}) }
+  catch(e){ console.log(e)}
+}
+
+    getToken();
+  }, [])
 
   useEffect(() => {
     const unsubscribe = onSnapshot(query(collection(db, "goals"), where("owner", "==", auth.currentUser.uid)), (snapshot) => {
